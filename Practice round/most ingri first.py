@@ -1,5 +1,5 @@
-f=open("/home/vedant/program files/Hash-Code-2021/Practice round/input/d_many_pizzas", "r")
-out=open("/home/vedant/program files/Hash-Code-2021/Practice round/output/d_many_pizzas", "w")
+f=open("/home/vedant/program files/Hash-Code-2021/Practice round/input/c_many_ingredients", "r")
+out=open("/home/vedant/program files/Hash-Code-2021/Practice round/output/c_many_ingredients", "w")
 M,T2,T3,T4=map(int,f.readline().split())
 pizza=[]
 for i in range(M):
