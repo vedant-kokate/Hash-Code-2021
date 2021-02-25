@@ -5,8 +5,8 @@ from math import ceil
 def formula(wt, mini_wt, ct, mini_ct):
     return max(ceil((mini_wt/wt)*(ct/mini_ct)), 1)
 
-def formula1(curr_wt, sum_wt):
-    return max(1, ceil((1 - curr_wt/sum_wt) * 1))
+def formula1(curr_wt, sum_wt, curr_cars):
+    return max(1, ceil((1 - curr_wt/sum_wt) * curr_cars))
 
 
 graph = defaultdict(lambda: {'in': set(), 'out':set()})
@@ -51,7 +51,7 @@ for node in graph:
         temp['count'] = ct
         roads_processed = []
         for name, curr_wt in road:
-            roads_processed.append((name, formula1(curr_wt, sum(map(lambda x: weight[x], graph[node]['in'])))))
+            roads_processed.append((name, formula1(curr_cars=cars_count[name], curr_wt=curr_wt, sum_wt=sum(map(lambda x: weight[x], graph[node]['in'])))))
         temp['roads'] = roads_processed
 
         if len(road): ans.append(temp)
