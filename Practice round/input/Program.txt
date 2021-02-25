@@ -1,0 +1,51 @@
+import java.util.*;
+
+/**
+ * class LLNode {
+ *   int val;
+ *   LLNode next;
+ * }
+ */
+class Solution {
+    public LLNode solve(LLNode l0, LLNode l1) {
+        LLNode s = new LLNode();
+        LLNode h = new LLNode();
+        LLNode s1 = l0;
+        LLNode s2 = l1;
+        int c = 0,sum = 0,f = 0;
+        while(s1 != null && s2 != null){
+            sum = (c + s1.val + s2.val)%10;
+            if(f == 0){
+                s.val = sum;
+                h = s;
+                f=1;
+            }else{
+                s.next = new LLNode();
+                s.next.val = sum;
+                s = s.next;
+            }
+            c = (s1.val + s2.val)/10;
+            s1 = s1.next;
+            s2 = s2.next;
+        }
+        while(s1 != null){
+            sum = (s1.val + c)%10;
+            c = s1.val/10;
+            s.next = new LLNode();
+            s.next.val = sum;
+            s = s.next;
+        }
+        while(s2 != null){
+            sum = (s2.val + c)%10;
+            c = s2.val/10;
+            s.next = new LLNode();
+            s.next.val = sum;
+            s = s.next;
+        }
+        if(c != 0){
+            s.next = new LLNode();
+            s.next.val = c;
+        } 
+        return h;  
+    }
+}
