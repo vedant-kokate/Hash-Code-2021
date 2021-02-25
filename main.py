@@ -1,9 +1,12 @@
 from collections import defaultdict, Counter
+from math import ceil
 
 #TODO: What to do with the weight
 def formula(wt, mini_wt, ct, mini_ct):
-    from math import ceil
     return max(ceil((mini_wt/wt)*(ct/mini_ct)), 1)
+
+def formula1(curr_wt, sum_wt):
+    return max(1, ceil((1 - curr_wt/sum_wt) * 1))
 
 
 graph = defaultdict(lambda: {'in': set(), 'out':set()})
@@ -37,18 +40,18 @@ for node in graph:
         }
         ct = 0
         road = []
-        mini_cars = 10**9
-        mini_wt = 10**9
+        # mini_cars = 10**9
+        # mini_wt = 10**9
         for r_ in graph[node]['in']:
             if cars_count[r_]:
                 ct += 1
-                mini_cars = min(mini_cars, cars_count[r_])
-                mini_wt = min(mini_wt, weight[r_])
-                road.append((r_, cars_count[r_]))
+                # mini_cars = min(mini_cars, cars_count[r_])
+                # mini_wt = min(mini_wt, weight[r_])
+                road.append((r_, weight[r_]))
         temp['count'] = ct
         roads_processed = []
-        for name, car_count in road:
-            roads_processed.append((name, formula(weight[name], mini_wt, cars_count[name], mini_cars)))
+        for name, curr_wt in road:
+            roads_processed.append((name, formula1(curr_wt, sum(map(lambda x: weight[x], graph[node]['in'])))))
         temp['roads'] = roads_processed
 
         if len(road): ans.append(temp)
