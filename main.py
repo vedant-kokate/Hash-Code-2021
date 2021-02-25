@@ -5,8 +5,12 @@ from math import ceil
 def formula(wt, mini_wt, ct, mini_ct):
     return max(ceil((mini_wt/wt)*(ct/mini_ct)), 1)
 
+
+
 def formula1(curr_wt, sum_wt, curr_cars):
     return max(1, ceil((1 - curr_wt/sum_wt) * curr_cars))
+
+
 
 
 graph = defaultdict(lambda: {'in': set(), 'out':set()})
