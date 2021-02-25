@@ -74,7 +74,7 @@ for node in graph:
             s += t
             roads_processed.append((name, t))
         
-        temp['roads'] = list(map(lambda x: (x[0], ceil(x[1]/s * 10)), roads_processed))
+        temp['roads'] = list(map(lambda x: (x[0], ceil(x[1]/s * )), roads_processed))
 
         if len(road): ans.append(temp)
 
