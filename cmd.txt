@@ -1,0 +1,6 @@
+python3 main.py < a.txt > a_out.txt
+python3 main.py < b.txt > b_out.txt
+python3 main.py < c.txt > c_out.txt
+python3 main.py < d.txt > d_out.txt
+python3 main.py < e.txt > e_out.txt
+python3 main.py < f.txt > f_out.txt

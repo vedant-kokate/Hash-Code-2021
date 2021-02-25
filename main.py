@@ -7,10 +7,6 @@ def formula(wt, mini_wt, ct, mini_ct):
 
 
 
-def formula1(curr_wt, sum_wt, curr_cars):
-    return max(1, ceil((1 - curr_wt/sum_wt) * curr_cars))
-
-
 
 
 graph = defaultdict(lambda: {'in': set(), 'out':set()})
@@ -35,6 +31,24 @@ for i in range(v):
         for road in roads: cars_count[road] += 1
 
 
+def formula1(curr_wt, sum_wt, mini_wt, mini_ct, cars_count, curr_car):
+    temp = min(
+            ceil((1 - curr_wt/sum_wt)* curr_car), 
+            ceil(
+                (mini_wt/curr_wt)*
+                (cars_count/mini_ct)
+            )
+        )
+
+    return min(
+            d, 
+            max(
+                1, 
+                temp
+            )
+        )
+
+
 # NAIVE Solution
 ans = []
 for node in graph:
@@ -44,19 +58,23 @@ for node in graph:
         }
         ct = 0
         road = []
-        # mini_cars = 10**9
-        # mini_wt = 10**9
+        mini_cars = 10**9
+        mini_wt = 10**9
         for r_ in graph[node]['in']:
             if cars_count[r_]:
                 ct += 1
-                # mini_cars = min(mini_cars, cars_count[r_])
-                # mini_wt = min(mini_wt, weight[r_])
+                mini_cars = min(mini_cars, cars_count[r_])
+                mini_wt = min(mini_wt, weight[r_])
                 road.append((r_, weight[r_]))
         temp['count'] = ct
         roads_processed = []
+        s = 0
         for name, curr_wt in road:
-            roads_processed.append((name, formula1(curr_cars=cars_count[name], curr_wt=curr_wt, sum_wt=sum(map(lambda x: weight[x], graph[node]['in'])))))
-        temp['roads'] = roads_processed
+            t = formula1(curr_car=cars_count[name] ,cars_count=cars_count[name], mini_wt=mini_wt, mini_ct=mini_cars ,curr_wt=curr_wt, sum_wt=sum(map(lambda x: weight[x], graph[node]['in'])))
+            s += t
+            roads_processed.append((name, t))
+        
+        temp['roads'] = list(map(lambda x: (x[0], ceil(x[1]/s * 10)), roads_processed))
 
         if len(road): ans.append(temp)
 
